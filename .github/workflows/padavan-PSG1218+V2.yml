@@ -61,35 +61,7 @@ jobs:
       env:
         T_NAMES: "PSG1218"        # 设备名字数组
       run: |
-        # 循环替换自定义默认模板和构建，单个设备的 sh 拷贝 t_item 需要编译的固件名字
-        for t_item in $T_NAMES;
-        do
-        if [ -f $BASE_PATH/$t_item/${t_item}.config ] ; then
-          mv -f $BASE_PATH/$t_item/${t_item}.config $WORK_PATH/trunk/configs/templates/${t_item}.config
-          echo "${t_item} config文件拷贝成功"
-        fi
-        if [ -f $BASE_PATH/$t_item/shadowsocks.sh ] ; then
-          mv -f $BASE_PATH/$t_item/shadowsocks.sh $WORK_PATH/trunk/user/shadowsocks/scripts/shadowsocks.sh
-        echo "shadowsocks SH文件拷贝成功"
-        fi
-        if [ -f $BASE_PATH/$t_item/defaults.h ] ; then
-          mv -f $BASE_PATH/$t_item/defaults.h $WORK_PATH/trunk/user/shared/defaults.h
-          echo "${t_item} 配置文件拷贝成功"
-        fi
-        if [ ! -d $BASE_PATH/$t_item/$THEME_PATH ] ; then
-          echo "${BASE_PATH}/${t_item}/${THEME_PATH} 自定义主题文件夹未找到"
-        elif [! -d $WORK_PATH/$THEME_PATH ] ; then
-              cp -r $BASE_PATH/$t_item/$THEME_PATH  $WORK_PATH/
-              echo "${THEME_PATH} 自定义主题文件夹拷贝成功"  
-           else
-              rm -rf $WORK_PATH/$THEME_PATH
-              cp -r $BASE_PATH/$t_item/$THEME_PATH  $WORK_PATH/
-              sudo rm -rf $WORK_PATH/trunk/user/www/n56u_ribbon_fixed/bootstrap
-              sudo rm -rf $WORK_PATH/trunk/user/www/n56u_ribbon_fixed/images
-              cp -rf $WORK_PATH/$THEME_PATH/. $WORK_PATH/trunk/user/www/n56u_ribbon_fixed
-              echo "${THEME_PATH} 复制主题文件结束"  
-        fi
-        done
+
     - name: Build Firmware
       env:
         TNAME: PSG1218
@@ -124,22 +96,22 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_MENTOHUST=n" >> .config #MENTOHUST
         echo "CONFIG_FIRMWARE_INCLUDE_SCUTCLIENT=n" >> .config #SCUTCLIENT
         echo "CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS=y" >> .config #SS plus+
-        echo "CONFIG_FIRMWARE_INCLUDE_SSOBFS=y" >> .config # simple-obfs混淆插件
+        echo "CONFIG_FIRMWARE_INCLUDE_SSOBFS=n" >> .config # simple-obfs混淆插件
         echo "CONFIG_FIRMWARE_INCLUDE_SSSERVER=n" >> .config #SS server
         echo "CONFIG_FIRMWARE_INCLUDE_DNSFORWARDER=n" >> .config #DNSFORWARDER
         echo "CONFIG_FIRMWARE_INCLUDE_ADBYBY=n" >> .config #去广告adbyby plus+
-        echo "CONFIG_FIRMWARE_INCLUDE_FRPC=n" >> .config #内网穿透FRPC
+        echo "CONFIG_FIRMWARE_INCLUDE_FRPC=y" >> .config #内网穿透FRPC
         echo "CONFIG_FIRMWARE_INCLUDE_FRPS=n" >> .config #内网穿透FRPS
         echo "CONFIG_FIRMWARE_INCLUDE_TUNSAFE=n" >> .config #TUNSAFE
         echo "CONFIG_FIRMWARE_INCLUDE_ALIDDNS=y" >> .config #阿里DDNS
-        echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=y" >> .config #smartdns
+        echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=n" >> .config #smartdns
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=n" >> .config #smartdns二进制文件
         echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=n" >> .config #集成v2ray执行文件（3.8M左右)，如果不集成，会从网上下载下来执行，不影响正常使用
         echo "CONFIG_FIRMWARE_INCLUDE_TROJAN=n" >> .config #集成trojan执行文件(1.1M左右)，如果不集成，会从网上下载下来执行，不影响正常使用
         echo "CONFIG_FIRMWARE_INCLUDE_KOOLPROXY=n" >> .config #KP广告过滤
         echo "CONFIG_FIRMWARE_INCLUDE_CADDY=n" >> .config #在线文件管理服务
         echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=n" >> .config #集成caddu执行文件，此文件有13M,请注意固件大小。如果不集成，会从网上下载下来执行，不影响正常使用
-        echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config
+        echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=n" >> .config
         echo "CONFIG_FIRMWARE_INCLUDE_SRELAY=n" >> .config #可以不集成
         echo "CONFIG_FIRMWARE_INCLUDE_WYY=n" >> .config #网易云解锁
         echo "CONFIG_FIRMWARE_INCLUDE_WYYBIN=n" >> .config #网易云解锁GO版本执行文件（4M多）注意固件超大小,不集成会自动下载
