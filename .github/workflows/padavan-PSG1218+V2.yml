@@ -24,7 +24,7 @@ env:
   PUBLIC_PATH: public               # 公共目录
   PUBLIC_SH: public.sh              # 公共命令
   THEME_PATH: theme
-  CLONE_URL: https://github.com/chongshengB/rt-n56u.git    # padavan  地址
+  CLONE_URL: https://github.com/shiyu1314/padavan.git    # padavan  地址
   CLONE_BRANCH: master              # padavan 分支
   WORK_PATH: /opt/rt-n56u           # 工作目录 一定要加 /
   UPLOAD_FIRMWARE: true
@@ -103,7 +103,7 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_FRPC=y" >> .config #内网穿透FRPC
         echo "CONFIG_FIRMWARE_INCLUDE_FRPS=n" >> .config #内网穿透FRPS
         echo "CONFIG_FIRMWARE_INCLUDE_TUNSAFE=n" >> .config #TUNSAFE
-        echo "CONFIG_FIRMWARE_INCLUDE_ALIDDNS=y" >> .config #阿里DDNS
+        echo "CONFIG_FIRMWARE_INCLUDE_ALIDDNS=n" >> .config #阿里DDNS
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNS=n" >> .config #smartdns
         echo "CONFIG_FIRMWARE_INCLUDE_SMARTDNSBIN=n" >> .config #smartdns二进制文件
         echo "CONFIG_FIRMWARE_INCLUDE_V2RAY=n" >> .config #集成v2ray执行文件（3.8M左右)，如果不集成，会从网上下载下来执行，不影响正常使用
